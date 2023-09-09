@@ -1,24 +1,22 @@
-from flask import Flask, request, app,render_template
-from flask import Response
+from flask import Flask, request,render_template
 import pickle
 import numpy as np
 import pandas as pd
 
 
 application = Flask(__name__)
-app=application
 
 scaler=pickle.load(open("Model/standardScalar.pkl", "rb"))
 model = pickle.load(open("Model/modelForPrediction.pkl", "rb"))
 
 ## Route for homepage
 
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('index.html')
 
 ## Route for Single data point prediction
-@app.route('/predictdata',methods=['GET','POST'])
+@application.route('/predictdata',methods=['GET','POST'])
 def predict_datapoint():
     result=""
 
@@ -48,4 +46,4 @@ def predict_datapoint():
 
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0")
+    application.run(host="0.0.0.0", port = 5000)
